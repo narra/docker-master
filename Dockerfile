@@ -1,4 +1,4 @@
-FROM phusion/passenger-ruby25
+FROM phusion/passenger-ruby26
 MAINTAINER Michal Mocnak <michal@narra.eu>
 LABEL Vendor="narra" Version="1.0"
 
