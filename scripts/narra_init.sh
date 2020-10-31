@@ -26,7 +26,7 @@ echo $pattern_start >> ./Gemfile
 for plugin in "${plugins[@]}"
 do
     plugin=($(echo $plugin | tr "#" "\n"))
-    bundle add ${plugin[0]} --skip-install --git=${plugin[1]}
+    sudo -u app bundle add ${plugin[0]} --skip-install --git=${plugin[1]}
 done
 echo $pattern_end >> ./Gemfile
 
