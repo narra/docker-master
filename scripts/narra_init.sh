@@ -20,15 +20,18 @@ cd /home/app/source/platform
 # Narra plugins discovery
 pattern_start="##### NARRA PLUGINS #####"
 pattern_end="##### END #####"
+echo $pattern_start
 sed -i "/$pattern_start/,/$pattern_end/d" ./Gemfile
 plugins=($(echo $NARRA_PLUGINS | tr ";" "\n"))
 echo $pattern_start >> ./Gemfile
 for plugin in "${plugins[@]}"
 do
     plugin=($(echo $plugin | tr "#" "\n"))
+    echo "Installing ${plugin[0]} from ${plugin[1]}"
     sudo -u app bundle add ${plugin[0]} --skip-install --git=${plugin[1]}
 done
 echo $pattern_end >> ./Gemfile
+echo $pattern_end
 
 # Installation
 sudo -u app bundle install
