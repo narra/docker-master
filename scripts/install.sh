@@ -9,7 +9,7 @@ set -x
 rvm-exec default gem install bundler
 
 # NARRA initialization
-/narra_build/scripts/narra_init.sh install
+/narra_build/scripts/narra_init.sh
 
 # Nginx initialization
 rm -f /etc/service/nginx/down
