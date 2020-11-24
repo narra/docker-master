@@ -9,7 +9,7 @@ set -x
 rvm-exec default gem install bundler
 
 # NARRA initialization
-/narra_build/scripts/narra_init.sh
+/narra_build/scripts/narra_init.sh install
 
 # Nginx initialization
 rm -f /etc/service/nginx/down
@@ -23,7 +23,3 @@ cp /narra_build/scripts/narra_init.sh /etc/my_init.d/01_narra.sh
 
 # Update nginx run script
 cp /narra_build/scripts/nginx_run.sh /etc/service/nginx/run
-
-# Enable the NARRA debug service.
-mkdir /etc/service/narra-master-debug
-cp /narra_build/scripts/narra_debug.sh /etc/service/narra-master-debug/run
