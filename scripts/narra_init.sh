@@ -9,7 +9,7 @@ else
     git clone https://github.com/narra/platform.git /home/app/source/platform
     # Check for tag
     if [ -n "$NARRA_VERSION" ]; then
-        git checkout tags/$NARRA_VERSION
+        git checkout tags/v$NARRA_VERSION
     fi
 fi
 
