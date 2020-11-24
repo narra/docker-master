@@ -6,4 +6,5 @@ set -x
 apt-get update
 apt-get install -y --force-yes \
     wget \
-    sudo
+    sudo \
+    rsync

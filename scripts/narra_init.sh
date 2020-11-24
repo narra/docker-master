@@ -3,39 +3,22 @@
 rm -rf /home/app/source
 
 if [[ "$PASSENGER_APP_ENV" == "development" ]]; then
-    ln -s /narra_source /home/app/source
+    mkdir -p /home/app/source/angular-editor/dist/editor && rsync -a /narra_source/angular-editor/dist/editor/ /home/app/source/angular-editor/dist/editor
 else
     mkdir /home/app/source
-    git clone https://github.com/narra/platform.git /home/app/source/platform
+    git clone https://github.com/narra/angular-editor.git /home/app/source/angular-editor
     # Check for tag
-    if [ -n "$NARRA_VERSION" ]; then
-        git checkout tags/$NARRA_VERSION
+    if [ -n "$NARRA_EDITOR_VERSION" ]; then
+        git checkout tags/$NARRA_EDITOR_VERSION
     fi
 fi
 
+# Set ENV for Angular
+cat > /home/app/source/angular-editor/dist/editor/assets/environment.json <<EOF
+    {
+      "NARRA_API_HOSTNAME": "$NARRA_API_HOSTNAME"
+    }
+EOF
+
 # Narra post initialization
-chown -R app:app /home/app/source
-cd /home/app/source/platform
-
-# Narra plugins discovery
-pattern_start="##### NARRA PLUGINS #####"
-pattern_end="##### END #####"
-echo $pattern_start
-sed -i "/$pattern_start/,/$pattern_end/d" ./Gemfile
-plugins=($(echo $NARRA_PLUGINS | tr ";" "\n"))
-echo $pattern_start >> ./Gemfile
-for plugin in "${plugins[@]}"
-do
-    plugin=($(echo $plugin | tr "#" "\n"))
-    if bundle list --name-only | grep -q ${plugin[0]}; then
-        echo "Plugin ${plugin[0]} already installed"
-    else
-        echo "Installing ${plugin[0]} from ${plugin[1]}"
-        bundle add ${plugin[0]} --skip-install --git=${plugin[1]}
-    fi
-done
-echo $pattern_end >> ./Gemfile
-echo $pattern_end
-
-# Installation
-sudo -u app bundle install
+chown -R app:app /home/app/source/angular-editor
