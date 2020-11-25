@@ -2,7 +2,7 @@
 # Narra initialization
 rm -rf /home/app/source
 
-if [[ "$PASSENGER_APP_ENV" == "development" ]]; then
+if [[ "$NARRA_ENV" == "development" ]]; then
     mkdir -p /home/app/source && rsync -a /narra_source/ /home/app/source
 else
     mkdir -p /home/app/source
